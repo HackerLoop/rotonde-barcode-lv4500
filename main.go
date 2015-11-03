@@ -6,8 +6,8 @@ import (
 	"github.com/GeertJohan/go.hid"
 )
 
-const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -=[]\\ ;'`,./"
-const charMapMaj string = "    ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\n  \t _+{}| :\"~<>?"
+const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -=[]\\ ;'`,./                           /*-+\n123467890"
+const charMapMaj string = "    ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\n  \t _+{}| :\"~<>?                           /*-+\n123467890"
 
 func PrintHex(buffer []byte, n int) {
 	l := ""
