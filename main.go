@@ -44,9 +44,9 @@ func startListening(device *hid.Device) {
 			index := int(b[2])
 			var cm string
 			if b[0] == 0x02 {
-				cm = charMap
-			} else {
 				cm = charMapMaj
+			} else {
+				cm = charMap
 			}
 			if index > 0 && index < len(cm) {
 				current += fmt.Sprintf("%s", string(cm[index]))
