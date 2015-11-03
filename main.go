@@ -33,7 +33,7 @@ func startListening(device *hid.Device) {
 		if n == 0 {
 			continue
 		}
-		PrintHex(b, n)
+		// PrintHex(b, n)
 		if b[2] != 0 {
 			if b[2] == 0x51 {
 				fmt.Println(current)
