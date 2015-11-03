@@ -26,8 +26,13 @@ func startListening(device *hid.Device) {
 			if index > 0 && index < len(charMap) {
 				fmt.Printf("%s", string(charMap[index]))
 			} else {
-				fmt.Println("unknown key %x", index)
+				fmt.Printf("unknown key %x\n", index)
 			}
+		} else {
+			for _, b := range b[:n] {
+				fmt.Printf("%x", b)
+			}
+			fmt.Println()
 		}
 	}
 
