@@ -6,8 +6,8 @@ import (
 	"github.com/GeertJohan/go.hid"
 )
 
-const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -={}\\;'`,./"
-const charMapMaj string = "    ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\n  \t _+{}|:\"~<>?"
+const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -=[]\\ ;'`,./"
+const charMapMaj string = "    ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\n  \t _+{}| :\"~<>?"
 
 func startListening(device *hid.Device) {
 	b := make([]byte, 20)
