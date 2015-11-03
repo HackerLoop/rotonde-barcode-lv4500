@@ -42,8 +42,14 @@ func startListening(device *hid.Device) {
 				continue
 			}
 			index := int(b[2])
-			if index > 0 && index < len(charMap) {
-				current += fmt.Sprintf("%s", string(charMap[index]))
+			var cm string
+			if b[0] == 0x02 {
+				cm = charMap
+			} else {
+				cm = charMapMaj
+			}
+			if index > 0 && index < len(cm) {
+				current += fmt.Sprintf("%s", string(cm[index]))
 			} else {
 				fmt.Printf("unknown key %d 0x%x\n", index, index)
 			}
