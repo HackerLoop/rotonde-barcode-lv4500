@@ -9,8 +9,20 @@ import (
 const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -=[]\\ ;'`,./"
 const charMapMaj string = "    ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\n  \t _+{}| :\"~<>?"
 
+func PrintHex(buffer []byte, n int) {
+	l := ""
+	for i, b := range buffer {
+		if i > 0 {
+			l += ":"
+		}
+		l += fmt.Sprintf("%.02x", b)
+	}
+	fmt.Println(l)
+}
+
 func startListening(device *hid.Device) {
 	b := make([]byte, 20)
+	current := ""
 
 	fmt.Println("Start listening HID")
 	for {
@@ -21,18 +33,20 @@ func startListening(device *hid.Device) {
 		if n == 0 {
 			continue
 		}
+		PrintHex(b, n)
 		if b[2] != 0 {
+			if b[2] == 0x51 {
+				fmt.Println(current)
+				continue
+			} else if b[2] == 0x28 {
+				continue
+			}
 			index := int(b[2])
 			if index > 0 && index < len(charMap) {
-				fmt.Printf("%s", string(charMap[index]))
+				current += fmt.Sprintf("%s", string(charMap[index]))
 			} else {
 				fmt.Printf("unknown key %d 0x%x\n", index, index)
 			}
-		} else {
-			for _, b := range b[:n] {
-				fmt.Printf("%x", b)
-			}
-			fmt.Println()
 		}
 	}
 
