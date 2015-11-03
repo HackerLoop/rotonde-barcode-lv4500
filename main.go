@@ -37,6 +37,7 @@ func startListening(device *hid.Device) {
 		if b[2] != 0 {
 			if b[2] == 0x51 {
 				fmt.Println(current)
+				current = ""
 				continue
 			} else if b[2] == 0x28 {
 				continue
