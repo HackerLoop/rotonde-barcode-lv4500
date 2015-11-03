@@ -6,7 +6,8 @@ import (
 	"github.com/GeertJohan/go.hid"
 )
 
-const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890   \t -={}\\;'`,./"
+const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -={}\\;'`,./"
+const charMapMaj string = "    ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\n  \t _+{}|:\"~<>?"
 
 func startListening(device *hid.Device) {
 	b := make([]byte, 20)
@@ -24,6 +25,8 @@ func startListening(device *hid.Device) {
 			index := int(b[2])
 			if index > 0 && index < len(charMap) {
 				fmt.Printf("%s", string(charMap[index]))
+			} else {
+				fmt.Println("unknown key %x", index)
 			}
 		}
 	}
