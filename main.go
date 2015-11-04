@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/GeertJohan/go.hid"
+	"github.com/HackerLoop/rotonde-client.go"
+	"github.com/HackerLoop/rotonde/shared"
 )
 
 const charMap string = "    abcdefghijklmnopqrstuvwxyz1234567890\n  \t -=[]\\ ;'`,./                           /*-+\n123467890.\\="
@@ -20,7 +22,7 @@ func PrintHex(buffer []byte, n int) {
 	fmt.Println(l)
 }
 
-func startListening(device *hid.Device) {
+func startListening(c chan string, device *hid.Device) {
 	b := make([]byte, 20)
 	current := ""
 
@@ -37,6 +39,7 @@ func startListening(device *hid.Device) {
 		if b[2] != 0 {
 			if b[2] == 0x51 {
 				fmt.Println(current)
+				c <- current
 				current = ""
 				continue
 			} else if b[2] == 0x28 {
@@ -80,7 +83,22 @@ func main() {
 		return
 	}
 
-	go startListening(device)
-	select {}
+	c := make(chan string, 10)
+	go startListening(c, device)
 
+	r := client.NewClient("ws://127.0.0.1:4224/")
+
+	event := &rotonde.Definition{"BARCODE_RECEIVED", "event", rotonde.FieldDefinitions{}}
+	event.PushField("code", "string", "")
+	r.AddLocalDefinition(event)
+
+	go func() {
+		for code := range c {
+			r.SendEvent("BARCODE_RECEIVED", rotonde.Object{
+				"code": code,
+			})
+		}
+	}()
+
+	select {}
 }
