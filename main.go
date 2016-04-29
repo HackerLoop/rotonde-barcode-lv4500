@@ -88,7 +88,7 @@ func main() {
 
 	r := client.NewClient("ws://rotonde:4224/")
 
-	event := &rotonde.Definition{"BARCODE_RECEIVED", "event", rotonde.FieldDefinitions{}}
+	event := &rotonde.Definition{"BARCODE_RECEIVED", "event", false, rotonde.FieldDefinitions{}}
 	event.PushField("code", "string", "")
 	r.AddLocalDefinition(event)
 
