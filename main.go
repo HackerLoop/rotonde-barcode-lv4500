@@ -86,7 +86,7 @@ func main() {
 	c := make(chan string, 10)
 	go startListening(c, device)
 
-	r := client.NewClient("ws://127.0.0.1:4224/")
+	r := client.NewClient("ws://rotonde:4224/")
 
 	event := &rotonde.Definition{"BARCODE_RECEIVED", "event", rotonde.FieldDefinitions{}}
 	event.PushField("code", "string", "")
