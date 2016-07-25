@@ -83,7 +83,7 @@ func main() {
 		return
 	}
 
-	c := make(chan string, 10)
+	c := make(chan string)
 	go startListening(c, device)
 
 	r := client.NewClient("ws://rotonde:4224/")
