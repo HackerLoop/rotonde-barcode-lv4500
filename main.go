@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/GeertJohan/go.hid"
-	"github.com/HackerLoop/rotonde-client.go"
+	"github.com/HackerLoop/rotonde-client-go"
 	"github.com/HackerLoop/rotonde/shared"
 )
 
