@@ -28,7 +28,7 @@ func startListening(c chan string, device *hid.Device) {
 
 	fmt.Println("Start listening HID")
 	for {
-		n, err := device.ReadTimeout(b, 20)
+		n, err := device.ReadTimeout(b, -1)
 		if err != nil {
 			panic(err)
 		}
