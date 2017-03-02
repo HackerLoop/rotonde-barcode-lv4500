@@ -69,11 +69,7 @@ func main() {
 		fmt.Printf("%d \n", item.VendorID)
 		if item.VendorID == 0x1eab && item.ProductID == 0x8203 {
 			fmt.Printf("%s %s\n", item.Manufacturer, item.Product)
-			var err errors;
-			device , err = item.Open()
-			if err != nil {
-				panic(err)
-			}
+			device , _ = item.Open()
 			break
 		}
 	}
