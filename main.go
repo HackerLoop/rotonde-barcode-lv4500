@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/GeertJohan/go.hid"
+	"github.com/karalabe/hid"
 	"github.com/HackerLoop/rotonde-client-go"
 	"github.com/HackerLoop/rotonde/shared"
 )
@@ -28,7 +28,7 @@ func startListening(c chan string, device *hid.Device) {
 
 	fmt.Println("Start listening HID")
 	for {
-		n, err := device.ReadTimeout(b, -1)
+		n, err := device.Read(b)
 		if err != nil {
 			panic(err)
 		}
@@ -63,23 +63,18 @@ func startListening(c chan string, device *hid.Device) {
 }
 
 func main() {
-	list, err := hid.Enumerate(0x0, 0x0)
-	if err != nil {
-		panic(err)
-	}
-
+	list := hid.Enumerate(0x1eab, 0x8203)
 	var device *hid.Device
 	for _, item := range list {
-		if item.VendorId == 0x1eab && item.ProductId == 0x8203 {
+		fmt.Printf("%d \n", item.VendorID)
+		if item.VendorID == 0x1eab && item.ProductID == 0x8203 {
 			fmt.Printf("%s %s\n", item.Manufacturer, item.Product)
-			device, err = item.Device()
-			if err != nil {
-				panic(err)
-			}
+			device , _ = item.Open()
 			break
 		}
 	}
 	if device == nil {
+			fmt.Printf("coincoin\n")
 		return
 	}
 
